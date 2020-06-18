@@ -63,10 +63,10 @@ const users: User[] = [
     { type: 'user', name: 'Kate Müller', age: 23, occupation: 'Astronaut' }
 ];
 
-type AdminsApiResponse = (
+type ApiResponse<T> = (
     {
         status: 'success';
-        data: Admin[];
+        data: T;
     } |
     {
         status: 'error';
@@ -74,39 +74,33 @@ type AdminsApiResponse = (
     }
 );
 
-function requestAdmins(callback: (response: AdminsApiResponse) => void) {
+type CallBack<U extends ApiResponse<any>> =
+    U extends ApiResponse<infer T>
+        ? (arg0: ApiResponse<T>) => void
+        : (arg0: U) => void
+
+function requestAdmins(callback: CallBack<ApiResponse<Admin[]>>) {
     callback({
         status: 'success',
         data: admins
     });
 }
 
-type UsersApiResponse = (
-    {
-        status: 'success';
-        data: User[];
-    } |
-    {
-        status: 'error';
-        error: string;
-    }
-);
-
-function requestUsers(callback: (response: UsersApiResponse) => void) {
+function requestUsers(callback: (response: ApiResponse<User[]>) => void) {
     callback({
         status: 'success',
         data: users
     });
 }
 
-function requestCurrentServerTime(callback: (response: unknown) => void) {
+function requestCurrentServerTime(callback: (response: ApiResponse<number>) => void) {
     callback({
         status: 'success',
         data: Date.now()
     });
 }
 
-function requestCoffeeMachineQueueLength(callback: (response: unknown) => void) {
+function requestCoffeeMachineQueueLength(callback: (response: ApiResponse<number>) => void) {
     callback({
         status: 'error',
         error: 'Numeric value has exceeded Number.MAX_SAFE_INTEGER.'
@@ -120,7 +114,7 @@ function logPerson(person: Person) {
 }
 
 function startTheApp(callback: (error: Error | null) => void) {
-    requestAdmins((adminsResponse) => {
+    requestAdmins((adminsResponse: ApiResponse<Admin[]>) => {
         console.log(chalk.yellow('Admins:'));
         if (adminsResponse.status === 'success') {
             adminsResponse.data.forEach(logPerson);

@@ -40,8 +40,31 @@ interface Admin {
     age: number;
     role: string;
 }
-
-type PowerUser = unknown;
+// interface PowerUser {
+//     type: 'powerUser';
+//     name: string;
+//     age: number;
+//     role: string;
+//     occupation: string;
+// }
+// type aaa = (User & Admin)
+// const a :aaa = {
+//     type: 'powerUser',
+//     name: 'Nikki Stone',
+//     age: 45,
+//     role: 'Moderator',
+//     occupation: 'Cat groomer'
+// }
+type PowerUser = Omit<User, "type"> & Omit<Admin, "type"> & {
+    type: 'powerUser'
+};
+// abstract class PowerUser implements User,Admin {
+//     type: "powerUser";
+//     name: string;
+//     age: number;
+//     occupation: string;
+//     role: string;
+// }
 
 type Person = User | Admin | PowerUser;
 
