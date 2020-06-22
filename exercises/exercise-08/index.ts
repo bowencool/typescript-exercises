@@ -79,6 +79,10 @@ type CallBack<U extends ApiResponse<any>> =
         ? (arg0: ApiResponse<T>) => void
         : (arg0: U) => void
 
+// interface CallBack<U extends ApiResponse<any>> {
+//    (arg0: U extends ApiResponse<infer T> ? ApiResponse<T> : U): void;
+// }
+
 function requestAdmins(callback: CallBack<ApiResponse<Admin[]>>) {
     callback({
         status: 'success',
