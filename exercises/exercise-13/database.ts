@@ -55,7 +55,6 @@ type Query<T> =
 			}[];
 	  };
 
-// TODO
 // interface Query<T> {
-// 	[K in keyof T]?: { [K1 in CompareKeys]?: T[K] };
+// 	[K in CompareKeys]: { [K1 in CompareKeys]?: T[K] };
 // }
