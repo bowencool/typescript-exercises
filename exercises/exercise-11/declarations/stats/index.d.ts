@@ -1,8 +1,9 @@
 declare module "stats" {
-  //   type Comparator = Parameters<typeof Array.prototype.sort>;
+  // type Comparator = Parameters<typeof Array.prototype.sort>;
   type Comparator = (a: any, b: any) => number;
+  // TODO
   interface Fn {
-    (input: any[], comparator: Comparator): number;
+    (input: any[], comparator: Comparator): any;
   }
 
   export const getMaxIndex: Fn;
