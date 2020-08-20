@@ -11,15 +11,12 @@ const stringList = createList<string>(); // ok
 const arrayList = createList<any[]>(); // ok
 const boolList = createList<boolean>(); // error
 
-type NoRetFn = (...args: any[]) => void;
-// type NoRetFn = () => void;
-// interface NoRetFn {
-// 	// (...args: any[]): void;
-// 	(n:number): void;
+// type NoReturnFn = () => void;
+// interface NoReturnFn {
+//   (...args: any[]): void;
 // }
-function debounce<F extends NoRetFn>(fn: F) {}
+type NoReturnFn = (...args: any[]) => void;
+const foo: NoReturnFn = (n: number) => n;
 
-// ? WTF
-const foo: NoRetFn = (n: number) => n;
-
-debounce(foo);
+// function debounce<F extends NoReturnFn>(fn: F) {}
+// debounce(foo);
